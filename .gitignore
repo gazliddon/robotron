@@ -1,0 +1,6 @@
+tmp/
+roms/
+deps/
+lsp.log
+*.sym
+*.map

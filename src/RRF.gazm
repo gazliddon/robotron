@@ -1,0 +1,705 @@
+; OPT    PAGS
+; TTL    R O B O T   W A R
+;
+; HARDWARE CONSTANTS
+;
+HSTK:           EQU      $BF70
+VECTOR:         EQU      $EFF0
+CRAM:           EQU      $C000 ; COLOR RAM ADDR
+WDOG:           EQU      $CBFF
+WDATA:          EQU      $39
+CMOS:           EQU      $CC00
+SOUND:          EQU      $C80E
+VERTCT:         EQU      $CB00 ; 6-BIT VERTICAL BEAM ADDR
+RWCNTL:         EQU      $C900 ; (BIT 0: 1-ROM READ; 0-RAM READ)
+;                (BIT 1: 1-INVERT;   0-NORMAL SCREEN)
+;
+;PIA DEFINITIONS
+;
+PIA0:           EQU      $C80C
+;B0 AUTO UP
+;B1 ADVANCE
+;B2 RCOIN
+;B3 HSRESET
+;B4 LCOIN
+;B5 CCOIN
+;B6 SLAM
+;B7 SOUND HANDSHAKE
+;CA2 LED3 
+;CA1 IRQ 240 (16 MS)  (LINE 240)
+PIA1:           EQU      $C80E
+;B0-B5 SOUND
+;B6-B7 LED 0,1
+;CB1 IRQ 4 MS (0,$40,$80,$C0)
+;CB2 LED2            
+PIA2:           EQU      $C804
+;B0 MOVE UP
+;B1 MOVE DOWN
+;B2 MOVE LEFT
+;B3 MOVE RIGHT
+;B4 START 1
+;B5 START 2
+;B6 FIRE UP
+;B7 FIRE DOWN
+;
+PIA3:           EQU      $C806
+;B0 FIRE LEFT
+;B1 FIRE RIGHT
+;B7 INPUT 1=COCKTAIL
+;CB2 OUTPUT SWITCH MUX CONTROL 1=PLAYER1,0=PLAYER2
+;
+;DMA CONSTANTS
+;
+DMACTL:         EQU      $CA00 ; CONTROL BYTE WRITE INITIATES TRANSFER
+;B0:READ FORMAT 0=SERIAL;1=BLOCK
+;B1:WRITE FORMAT 0=SERIAL;1=BLOCK
+;B2:XSFER RATE 0=ROM-RAM (1MSEC); 1=RAM-RAM (2 MSEC)
+;B3:1=ZERO WRITE SUPPRESS
+;B4:1=CONSTANT SUBSTITUTION
+;B5:1=ODD FLAVOR
+;B6:1=B0-B3 WRITE SUPPRESS
+;B7:1=B4-B7 WRITE SUPPRESS
+DMACON:         EQU      $CA01 ; CONSTANT DATA BYTE
+DMAORG:         EQU      $CA02 ; ORIGIN ADDR MSB,LSB
+DMADES:         EQU      $CA04 ; DESTINATION "
+DMASIZ:         EQU      $CA06 ; HOR,VERT BYTE COUNTS
+;SCORE DISPLAY CONSTANTS
+YMAX:           EQU      234
+YMIN:           EQU      24 ; MIN Y COORD
+XMAX:           EQU      $8F
+XMIN:           EQU      7
+P1ORG:          EQU      $18*$100+14
+P1MAN:          EQU      P1ORG+7*$300+$100
+P1DISP:         EQU      P1ORG
+P2ORG:          EQU      P1ORG+$40*$100
+P2MAN:          EQU      P2ORG+P1MAN-P1ORG
+P2DISP:         EQU      P2ORG
+DIGLTH:         EQU      $300
+PCOORD:         EQU      $4A7C ; INIT PLAYER COORD
+FONCOL:         EQU      $66 ; PHONY STARTUP COLOR
+;
+;MODULE  VECTORS + STORAGE ALLOCATION
+;
+;**OPSYS**..... R O S ..........
+;
+ROSORG: equ $D000
+INIT:           equ ROSORG + 0
+ASCAN:          equ ROSORG + 3
+SDOUT:          equ ROSORG + 6
+SCRTRN:         equ ROSORG + 9
+SCORE:          equ ROSORG + 12
+SCRTR0:         equ ROSORG + 15
+SCRCLR:         equ ROSORG + 18
+DMAOFF:         equ ROSORG + 21
+DMAON:          equ ROSORG + 24
+BLKCLR:         equ ROSORG + 27
+PCTOFF:         equ ROSORG + 30
+PCTON:          equ ROSORG + 33
+COLST:          equ ROSORG + 36
+COL0:           equ ROSORG + 39
+HEXBCD:         equ ROSORG + 42
+BCDHEX:         equ ROSORG + 45
+OINIT:          equ ROSORG + 48
+CRINIT:         equ ROSORG + 51
+PINIT:          equ ROSORG + 54
+RAND:           equ ROSORG + 57
+RAND16:         equ ROSORG + 60
+RMAX:           equ ROSORG + 63
+RANDU:          equ ROSORG + 66
+PLINDX:         equ ROSORG + 69
+PLDX:           equ ROSORG + 72
+SNDLD:          equ ROSORG + 75
+KILO1:          equ ROSORG + 78
+GETOBJ:         equ ROSORG + 81
+MAKEP:          equ ROSORG + 84
+MKPROC:         equ ROSORG + 87
+MSPROC:         equ ROSORG + 90
+KILL:           equ ROSORG + 93
+GNCIDE:         equ ROSORG + 96
+SUCIDE:         equ ROSORG + 99
+SLEEP:          equ ROSORG + 102
+RIPV:           equ ROSORG + 105
+MPROB:          equ ROSORG + 108
+GETOB:          equ ROSORG + 111
+KILLOB:         equ ROSORG + 114
+KILLOF:         equ ROSORG + 117
+KILOFP:         equ ROSORG + 120
+GETROB:         equ ROSORG + 123
+KILROB:         equ ROSORG + 126
+GETPST:         equ ROSORG + 129
+KILPST:         equ ROSORG + 132
+GETHUM:         equ ROSORG + 135
+KILHUM:         equ ROSORG + 138
+DMAOFN:         equ ROSORG + 141
+MPCTON:         equ ROSORG + 144
+BLKON:          equ ROSORG + 147
+EXECV:          equ ROSORG + 150
+P1SW:           equ ROSORG + 153
+P2SW:           equ ROSORG + 156
+DIVAB:          equ ROSORG + 159
+RCMOSA:         equ ROSORG + 162
+RCMOSB:         equ ROSORG + 165
+RCMOSD:         equ ROSORG + 168
+WCMOSA:         equ ROSORG + 171
+WCMOSB:         equ ROSORG + 174
+WCMOSD:         equ ROSORG + 177
+BCDBIN:         equ ROSORG + 180
+RWMOVE:         equ ROSORG + 183
+AUD:            equ ROSORG + 186
+AUD1:           equ ROSORG + 189
+INT20V:         equ ROSORG + 192
+LFV:            equ ROSORG + 195
+NEWBCH:         equ ROSORG + 198
+;
+;PLAYER DEATH
+;
+RDORG: equ $DD00
+RDTHV:          equ RDORG + 0
+;
+;HUMANS+HULKS
+;
+RHORG: equ $0000
+HULKST:         equ RHORG + 0
+HUMST:          equ RHORG + 3
+CKLIM:          equ RHORG + 6
+SKULL:          equ RHORG + 9
+P1KD:           equ RHORG + 12
+MOMPIC:         equ RHORG + 14
+DADPIC:         equ RHORG + 16
+KIDPIC:         equ RHORG + 18
+HLKPIC:         equ RHORG + 20
+HLKANA:         equ RHORG + 22
+HUMANA:         equ RHORG + 24
+SKLPIC:         equ RHORG + 26
+;
+;**CIRCLES,ENFORCERS,SPARX
+;
+RCORG: equ $1140
+CIRCST:         equ RCORG + 0
+CIRKV:          equ RCORG + 3
+CIRPIC:         equ RCORG + 6
+ENGPIC:         equ RCORG + 8
+ENFPIC:         equ RCORG + 10
+;
+;BRAINS & CO.
+;
+BRNORG: equ $1AC0
+BRNST:          equ BRNORG + 0
+BRNPIC:         equ BRNORG + 3
+BRONV:          equ BRNORG + 5
+HUMONV:         equ BRNORG + 8
+PRGPIC:         equ BRNORG + 11
+;
+;******ROBOT GAME...... R G .......
+;
+RGORG: equ $26C0
+PLAYER:         equ RGORG + 0
+RANDXY:         equ RGORG + 3
+CKOBS:          equ RGORG + 6
+MANDSP:         equ RGORG + 9
+STRT1:          equ RGORG + 12
+STRT2:          equ RGORG + 15
+TDISPV:         equ RGORG + 18
+MANPIC:         equ RGORG + 21
+LASPIC:         equ RGORG + 23
+;
+;ROBOTS&POSTS
+;
+RPORG: equ $3880
+RINIT:          equ RPORG + 0
+PSINIT:         equ RPORG + 3
+PSTP1:          equ RPORG + 6
+OPON:           equ RPORG + 8
+OPON1:          equ RPORG + 11
+SAFTY:          equ RPORG + 14
+ROBPIC:         equ RPORG + 17
+PSTPIC:         equ RPORG + 19
+PKPRCV:         equ RPORG + 21
+;
+;TRANSPORTER
+;
+RTORG: equ $4140
+TRANST:         equ RTORG + 0
+;
+;DIAGONAL EXPLOSIONS
+;
+RDXORG: equ $4680
+DXINIT:         equ RDXORG + 0
+DXST:           equ RDXORG + 3
+DAPST:          equ RDXORG + 6
+DXUPD:          equ RDXORG + 9
+;
+;TANKS
+;
+RTKORG: equ $4B00
+TANKST:         equ RTKORG + 0
+SQST:           equ RTKORG + 3
+SQPIC:          equ RTKORG + 6
+TNGPIC:         equ RTKORG + 8
+TNKPIC:         equ RTKORG + 10
+;
+;MARQUEE
+;
+RMORG: equ $5700
+RMST:           equ RMORG + 0
+;
+;EXPLOSIONS
+;
+RXORG: equ $5B40
+EXINIT:         equ RXORG + 0
+EXST:           equ RXORG + 3
+APST:           equ RXORG + 6
+EXUPD:          equ RXORG + 9
+PDEATH:         equ RXORG + 12
+HVEXST:         equ RXORG + 15
+DDEXST:         equ RXORG + 18
+AMAP:           equ RXORG + 21
+HAPST:          equ RXORG + 24
+HEXST:          equ RXORG + 27
+
+;             STINKY LINKY VINCKYS
+
+LOGORG:         EQU      $77A0 ; PLACE FOR PROGRAM
+GOV:            EQU      LOGORG
+CCV:            EQU      GOV+3
+
+TSCORG:         EQU      $E3D0 ; HIGH SCORE BULLSHIT
+PUPHSC:         EQU      TSCORG ; POWER UP HIGH SCORE CHECK
+ENDPRC:         EQU      PUPHSC+3 ; END OF GAME PROCESSING
+GODSET:         EQU      ENDPRC+3 ; ENTER GODS NAME BY OPERATOR
+HIGHRS:         EQU      GODSET+3 ; RESET HIGH SCORE TABLE BY OPERATOR
+HSCHKV:         EQU      HIGHRS+3 ; CHECK IF HS TABLE LOOKS BASHED
+HSBUTV:         EQU      HSCHKV+3 ; HIGH SCORE RESET BUTTON
+
+TABORG:         EQU      $DF40
+TABLEV:         EQU      TABORG
+
+TSTORG:         EQU      $F000
+PWRUPV:         EQU      TSTORG
+ADVSW:          EQU      PWRUPV+3
+AUTOCY:         EQU      ADVSW+3
+HXINIT:         EQU      AUTOCY+3
+HEXSTX:         EQU      HXINIT+3
+HAPSTX:         EQU      HEXSTX+3
+HXUPD:          EQU      HAPSTX+3
+WLOOPV:         EQU      HXUPD+3
+ELOOPV:         EQU      WLOOPV+2
+L2:             EQU      ELOOPV+2
+L0:             EQU      L2+2
+
+TSBORG:         EQU      $6F00 ; ADJUST PART OF TEST MODE
+ADJV:           EQU      TSBORG
+CMINIT:         EQU      ADJV+3
+ATMCK:          EQU      CMINIT+3
+GETLT:          EQU      ATMCK+3 ; ROUTINE TO GET LETTERS FROM CONTROL PANEL
+CMSMVV:         EQU      GETLT+3
+DOPMES:         EQU      CMSMVV+3 ; 2 BYTER
+
+TXORG:          EQU      $5F90 ; PLACE FOR TEXT PROGRAM
+PR35V:          EQU      TXORG
+PR57V:          EQU      PR35V+3
+WRD5V:          EQU      PR57V+3
+WRD7V:          EQU      WRD5V+3
+PRINV:          EQU      WRD7V+3
+PRSCR:          EQU      PRINV+3
+
+WRD5FV:         EQU      WRD5V
+WRD7FV:         EQU      WRD7V
+PRN5FV:         EQU      PR35V
+PRN7FV:         EQU      PR57V
+
+SETORG:         EQU      $E9C8 ; CHARACTER SET
+TAB35:          EQU      SETORG
+TAB57:          EQU      TAB35+2
+N0V:            EQU      TAB57
+
+;
+;BASE PAGE RAM AREA
+;
+                ORG      $9800
+RAM:            EQU      *
+                SETDP    RAM>>8
+PCRAM:          RMB      16 ; PSEUDO COLOR RAM
+TIMER:          RMB      1 ; IRQ TIMER
+ACTIVE:         RMB      2 ; POINTER TO LIST OF CURRENTLY ACTIVE (SLEEPING) PROCS.
+FREE:           RMB      2 ; POINTER TO LIST OF UNALLOCATED PROCESS SLEEP SPACE.
+CRPROC:         RMB      2 ; POINTER TO SLEEP AREA OF CURRENTLY EXECUTING PROCESS.
+OPTR:           RMB      2 ; MOTION OBJECT LIST POINTER
+OBPTR:          RMB      2 ; OBSTACLE LIST POINTER
+OFREE:          RMB      2 ; FREE LIST POINTER
+SPFREE:         RMB      2 ; SUPER PROCESS FREE LIST
+HPTR:           RMB      2 ; HUMAN PTR
+RPTR:           RMB      2 ; ROBOT LIST
+PPTR:           RMB      2 ; PHATAL OBJECT LIST
+ITEMP:          RMB      2 ; INTERUPT TEMP
+PSTIN:          RMB      2
+ITEMP2:         RMB      2
+XTEMP:          RMB      2 ; SAVE AREA FOR QUICK TEMPORARY
+XTEMP2:         RMB      2
+PIA01:          RMB      1 ; N-1 PIA0
+PIA02:          RMB      1 ; N-2 PIA0
+PIA21:          RMB      1 ; N-1 PIA2
+PIA22:          RMB      1 ; N-2 PIA2
+SWPROC:         RMB      12 ; SWITCH SCAN TEMP
+CURPLR:         RMB      1 ; CURRENT
+PLRCNT:         RMB      1 ; NUMBER OF PLAYERS
+XXX2:           RMB      1 ; '80' IRQ LINE
+OVCNT:          RMB      1 ; OVERFLOW COUNT
+IFLG:           RMB      1 ; IRQ FLAG
+FRAME:          RMB      1 ; IRQ COUNT
+RWCTMP:         RMB      1 ; SCREEN READ CONTROL BYTE
+REPLA:          RMB      2 ; REPLAY LEVEL
+PCFLG:          RMB      1 ; PLAYER COLLISION
+HTABX:          RMB      2 ; HUMAN TABLE INDEX
+;COIN BUSINESS
+SLMCNT:         RMB      1
+LCCNT:          RMB      1
+RCCNT:          RMB      1
+CCCNT:          RMB      1
+BUNITS:         RMB      1
+CUNITS:         RMB      1
+CREDIT:         RMB      1
+;ATTRACT SWITCHES: FONY PRAYAH CONTLOHL
+ATRSW2:         RMB      1
+ATRSW3:         RMB      1
+;SOUND RAM
+SNDX:           RMB      2 ; TABLE INDEX
+SNDPRI:         RMB      1 ; PRIORITY
+SNDTMR:         RMB      1
+SNDREP:         RMB      1
+;
+;STATUS FLAG
+;B7=GAME OVER
+;B6=
+;B5=
+;B4=PLAYER OUTPUT
+;B3=MOTION OBJS VEL +ENEMIES
+;B2=EXPLOSION UPDATE
+;B1=POST ,MOT OBJ REFRESH
+;B0=PLAYER MOTION,COLLISION,FIRE
+STATUS:         RMB      1
+;
+;PLAYER OBJECT STRUCTURE
+;
+PLOBJ:          EQU      *
+                RMB      2 ; OLINK
+PPICT:          RMB      2 ; OPICT
+PX:             RMB      2 ; OBJX
+                RMB      2 ; OBJID
+                RMB      2 ; OCVECT
+PX16:           RMB      2 ; OX16
+PY16:           RMB      2 ; OY16
+PXV:            RMB      2 ; OXV
+PYV:            RMB      2 ; OYV
+                RMB      1 ; OFLAV
+PODATA:         RMB      1 ; ODATA
+POLDPC:         RMB      2 ; OLDPIC
+PLAIMC:         RMB      1 ; PLAYER ANIMATION RATE
+PLAIMN:         RMB      1 ; PLAYER ANIMATION NUMBER
+PLAIMB:         RMB      2 ; PLAYER ANIMATION BASE ADDR
+;
+;COLLISION ROUTINE PARAMETERS
+;
+XCNT:           RMB      1 ; SCAN COUNTS
+YCNT:           RMB      1
+OX1:            RMB      1 ; OFFSETS
+OY1:            RMB      1
+PX1:            RMB      1
+PY1:            RMB      1
+OBW:            RMB      1 ; HT TEMPS
+PLW:            RMB      1
+ULX:            RMB      1 ; UPPER LEFT COORD
+ULY:            RMB      1 ; "
+LRX:            RMB      1
+LRY:            RMB      1
+CTEMP:          RMB      2 ; INDEX TEMP
+CTEMP2:         RMB      2
+;RANDOM VARIABLES
+SEED:           RMB      1
+HSEED:          RMB      1
+LSEED:          RMB      1
+;LASER
+LCNT:           RMB      1
+LASDIR:         RMB      2
+;SPARKS
+SPKCNT:         RMB      1
+ROBST:          RMB      2 ; PTR TO ROBOT LIST
+SAVCNT:         RMB      1 ; HUMAN COUNT SAVED
+BCMCNT:         RMB      1 ; BRAIN CRUISE MISSILES
+;POST ANIMATION+WALL COLOR
+WALCOL:         RMB      1 ; WALL+POST BG
+PSTCOL:         RMB      1 ; POST COLOR
+LASCOL:         RMB      1 ; LASER WALL COLLIDE COLOR
+PSTREF:         RMB      1 ; POST REFRESH RATE
+PSTANI:         RMB      2 ; CURR POST ANIMATION
+BRNFLG:         RMB      1 ; BRAIN HUMAN KILL FLAG
+;
+;EXPLOSION STUFF
+EXPRAM:         RMB      $10
+CENTMP:         RMB      2 ; CENTER OF BLOW
+HXRAM:          RMB      $10
+DXRAM:          RMB      $10
+RMRAM:          RMB      6 ; MARQUEE RAM
+
+;*********************** LINKYS STINKYS
+
+INDIAG:         RMB      1
+
+;
+;      TEXT VARIABLES
+;
+
+TEXCOL:         RMB      1 ; (TEXCOL)  PRINTING COLOR (NIBBLES REPRESENT FLAVOR COLO
+TXFLAV:         RMB      1 ; (TXFLAV) FLAVOR OF CURRENT CURSOR (0=EVEN, 1=ODD)
+TXLEAD:         RMB      1 ; (TXLEAD) LEAD ZERO BLANKING ON/OFF (0=OFF, 1=ON)
+TXFONT:         RMB      1 ; (TXFONT) FONT HEIGHT (5 OR 7) PIXELS
+TEXMAR:         RMB      2 ; CURRENT LEFT MARGIN CURSOR POINTER
+TEXMFL:         RMB      1 ; CURRENT LEFT MARGIN FLAVOR
+TEXTP3:         RMB      1
+TXCLIP:         RMB      1
+
+;
+;**    GET LETTER ROUTINE RAM
+;
+
+GETLRM:         RMB      2
+GETLST:         RMB      3
+
+;******************** LOGO RAM
+
+LOGX:           RMB      2
+LOGCOL:         RMB      1
+LOGCL2:         RMB      1
+LOGCNT:         RMB      1
+LOGSAV:         RMB      2
+LOGCST:         RMB      2
+
+LASTX:          RMB      2
+SIDE:           RMB      1
+BALCOL:         RMB      1
+SLIDER:         RMB      1
+ERPTR:          RMB      2
+;MOVE THIS SOMEDAY
+ENFCNT:         RMB      1
+GAMTIM:         RMB      1 ; GAME TIMER
+TNKSPD:         RMB      1 ; TANK SPEED PARAMETER
+SCRFLG:         RMB      1 ; SCORE FLAG
+SHLCNT:         RMB      1 ; SHELL COUNTER
+RIPFLG:         RMB      1
+HCK1:           RMB      1
+ATFLAG:         RMB      1 ; INDICATE WHAT PAGE AND HOW
+
+;
+;TABLE DATA
+;
+                ORG      RAM+$100 ; PAST BASE PAGE
+;
+;MASTER OBJECT LIST
+;
+OLIST:          EQU      *
+OSIZE:          EQU      $18
+;
+;INDEX OFFSETS
+;
+OLINK:          EQU      0 ; LINK TO NEXT
+OPICT:          EQU      2 ; PICTURE DESCRIPTOR ADDR
+OBJX:           EQU      4 ; UPPER LEFT SCREEN X
+OBJY:           EQU      5 ; UPPER LEFT SCREEN Y
+OBJID:          EQU      6 ; ASSOCIATED PROCESS ID (IF ANY)
+OCVECT:         EQU      8 ; COLLISION ROUTINE ADDR
+OX16:           EQU      $A ; 16 BIT X WORLD COORD
+OY16:           EQU      $C ; 16 BIT Y WORLD COORD
+OXV:            EQU      $E ; X VELOCITY
+OYV:            EQU      $10 ; Y VELOCITY
+OFLAV:          EQU      $12 ; OLD FLAVOR
+ODATA:          EQU      $13 ; MISC. DATA
+OLDPIC:         EQU      $14 ; OLD PICTURE TO ERASE
+FONIPC:         EQU      $16 ; FONY PICT FOR COLLISION PURPOSES
+;RESERVE AREA
+                rmb      180*OSIZE
+OLEND:          EQU      *
+;
+;USER DEFINED PROCESS TYPES
+;
+STYPE:          EQU      0 ; SYSTEM PROCESS
+CTYPE:          EQU      1 ; COIN
+;
+;SLEEPING PROCESS TABLE
+;
+PTAB:           EQU      *
+;
+;OFFSET CONSTANTS 
+;
+PLINK:          EQU      0
+PADDR:          EQU      2
+PTIME:          EQU      4
+PTYPE:          EQU      5
+PCOD:           EQU      6
+PDATA:          EQU      7
+PD:             EQU      7
+PD1:            EQU      8
+PD2:            EQU      9
+PD3:            EQU      10
+PD4:            EQU      11
+PD5:            EQU      12
+PD6:            EQU      13
+PD7:            EQU      14
+PSIZE:          EQU      15
+                rmb      15*120
+TABEND:         EQU      *
+;
+;SUPER PROCESSES
+;
+SPSIZE:         EQU      PSIZE+16
+SPTAB:          RMB      SPSIZE*20
+SPTEND:         EQU      *
+;
+;OBJECT PICTURE STRUCTURE
+;
+OBJW:           EQU      0
+OBJH:           EQU      1
+OBJDAT:         EQU      2
+OBJL:           EQU      4
+;
+;HUMAN TABLE
+;
+HTAB:           RMB      80
+HTBEND:         EQU      *
+;
+;POST REFRESH LIST
+;
+PSLIST:         RMB      64 ; POST LIST
+PSLEND:         EQU      *
+;
+;HORIZONTAL EXPLOSION TABLES
+;
+HXTAB:          RMB      $800
+
+;
+;DIAGONAL XPLOSION TABLES
+;
+DXTAB:          RMB      $200
+;
+;PLAYER DATA TABLE
+;
+PLDATA:         EQU      *
+ZP1SCR:         RMB      4 ; SCORE MSB 1ST
+ZP1RP:          RMB      4 ; NEXT REPLAY LEVEL
+ZP1LAS:         RMB      1 ; #OF LASERS
+ZP1WAV:         RMB      1 ; WAVE # IN HEX
+ZP1ENM:         RMB      50 ; ENEMY STATE
+ZP1END:         EQU      *
+ZP2SCR:         RMB      4
+ZP2RP:          RMB      4
+ZP2LAS:         RMB      1
+ZP2WAV:         RMB      1
+ZP2ENM:         RMB      50
+PLDEND:         EQU      * ; END OF PLAYER DATA
+PLDLEN:         EQU      ZP1END-PLDATA
+PSCOR:          EQU      ZP1SCR-PLDATA
+PRPLA:          EQU      ZP1RP-PLDATA
+PLAS:           EQU      ZP1LAS-PLDATA
+PWAV:           EQU      ZP1WAV-PLDATA
+PENEMY:         EQU      ZP1ENM-PLDATA
+;
+;ENEMIES LIST
+;WARNING DO NOT CHANGE ORDER OF COUNTS
+ELIST:          EQU      *
+ROBSPD:         RMB      1 ; SPEED
+RMXSPD:         RMB      1 ; MAX ROBOT SPEED
+ENFNUM:         RMB      1 ; # OF ENFORCERS/CIRCLE X2
+ENSTIM:         RMB      1 ; ENF SHOT TIMER
+CDPTIM:         RMB      1 ; CIRCLE DROP TIMER
+HLKSPD:         RMB      1 ; HULK SPEED
+BSHTIM:         RMB      1 ; BRAIN SHOT TIMER
+BRNSPD:         RMB      1 ; BRAIN SPEED
+TNKSHT:         RMB      1 ; TANK SHOT RATE
+SHLSPD:         RMB      1 ; SHELL SPEED
+TDPTIM:         RMB      1 ; TANK DROP TIMR
+SQSPD:          RMB      1 ; SQUARE SPEED
+ECNTS:          EQU      * ; START COUNTS
+ROBCNT:         RMB      1 ; # ROBOTS
+PSTCNT:         RMB      1 ; # POSTS
+MOMCNT:         RMB      1 ; # MOM UNITS
+DADCNT:         RMB      1 ; # DAD UNITS
+KIDCNT:         RMB      1 ; # KIDS
+HLKCNT:         RMB      1 ; # HULKS
+BRNCNT:         RMB      1 ; # BRAINS
+CIRCNT:         RMB      1 ; # CIRCLES
+SQCNT:          RMB      1 ; # SQUARES
+TNKCNT:         RMB      1 ; # TANKS
+ELEND:          EQU      *
+HCK2:           RMB      1
+;
+; CMOS RAM ALLOCATION
+;
+                ORG      CMOS+$100 ; WRITABLE CMOS
+CREDST:         RMB      2 ; CREDITS BACKUP
+SLOT1:          RMB      6 ; 1 LEFT COIN TOTAL
+                RMB      6 ; 2 CENTER COIN TOTAL
+                RMB      6 ; 3 RIGHT COIN TOTAL
+                RMB      6 ; 4 TOTAL PAID CREDITS
+                RMB      6 ; 5 TOTAL REPLAYS
+BKTIME:         RMB      6 ; 6 FLIGHT TIME IN MINS
+BKMEN:          RMB      6 ; 7 TOTAL SHIPS PLAYED
+BKPLAY:         RMB      6 ; 8 TOTAL GAMES PLAYED
+BKEND:          EQU      * ; END OF BOOKKEEPING STUFF
+SCRSIZ:         EQU      14 ; NUMBER OF NIBBLES IN A SCORE ENTRY
+GODINT:         RMB      6
+GODSCR:         RMB      48
+CMSCOR:         RMB      37*SCRSIZ ; 37 BACKED UP SCORES, 36 OF WHICH ARE VISIBLE
+TODAYS:         RMB      10*SCRSIZ ; TODAYS GREATEST
+TODEND:         EQU      *
+                ORG      CMOS ; ADEQUATE BIRTH CONTROL PROTECTION
+REPLAY:         RMB      2 ; REPLAY LEVEL
+NSHIP:          RMB      2 ; # OF SHIPS/1 CREDIT GAME
+COINSL:         RMB      2 ; FOR COINAGE SELECT MODE
+SLOT1M:         RMB      2 ; LEFT COIN MULT
+SLOT2M:         RMB      2 ; CENTER COIN MULT
+SLOT3M:         RMB      2 ; RIGHT COIN MULT
+CUNITC:         RMB      2 ; COIN UNITS PER CREDIT
+CUNITB:         RMB      2 ; COIN UNITS FOR BONUS
+MINUNT:         RMB      2 ; MINIMUM REQD
+FREEPL:         RMB      2 ; FREE PLAY MODE       (ONE CREDIT GAME)
+GA1:            RMB      2 ; 10 MASTER DIFFICULTY CONTROL               1
+GA2:            RMB      2 ; NUMBER OF LETTERS ALLOWED TO GOD           10
+SPECFN:         RMB      2 ; RESTORE FACTORY SETTINGS
+                RMB      2 ; CLEAR AUDIT TOTALS
+                RMB      2 ; INITIALIZE HIGH SCORE TABLE
+                RMB      2 ; INTIATE AUTO CYCLE
+                RMB      2 ; ENTER ATTRACT MODE MESSAGE
+                RMB      2 ; ENTER HIGHEST SCORE NAME
+ENDADJ:         EQU      *
+OPMESS:         RMB      100 ; 2 LINES OF 25 CHARS EACH.
+OPL1:           RMB      2
+OPL2:           RMB      2
+ADJSUM:         RMB      2
+OMESUM:         RMB      2
+
+;
+;M A C R O S
+;
+; NAP    MACRO
+; LDA #&1 TIME
+; LDX #&2 WAKEUP ADDR
+; JMP    SLEEP
+; ENDM
+;
+;MAKE A NEW PROCESS
+;
+; NEWP MACRO
+; LDX #&1 ADDR
+; LDA #&2 TYPE
+; JSR MKPROC
+; ENDM
+;INIT PROCESS \0=SADDR 
+; MAKP MACRO
+; JSR MAKEP
+; FDB &1
+; ENDM
+;MAKE A PROCESS AND OBJECT
+; MKPROB MACRO
+; JSR MPROB
+; FDB &1,&2,&3
+; ENDM
+

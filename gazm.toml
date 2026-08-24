@@ -1,0 +1,65 @@
+[vars]
+OUT_DIR = "roms"
+TMP_DIR = "tmp"
+REF_ROMS_DIR = "orig/roms"
+
+[[targets]]
+name = "robotron"
+verbose = "Silent"
+mem-size = 94208
+project-file = "src/robotron.gazm"
+source-mapping = "$(OUT_DIR)/robotron.map"
+syms-file = "$(OUT_DIR)/robotron.sym"
+cpu = "Cpu6809"
+
+bin-references = [
+    { file = "orig/roms/01", addr = 0x0000 },
+    { file = "orig/roms/02", addr = 0x1000 },
+    { file = "orig/roms/03", addr = 0x2000 },
+    { file = "orig/roms/04", addr = 0x3000 },
+    { file = "orig/roms/05", addr = 0x4000 },
+    { file = "orig/roms/06", addr = 0x5000 },
+    { file = "orig/roms/07", addr = 0x6000 },
+    { file = "orig/roms/08", addr = 0x7000 },
+    { file = "orig/roms/09", addr = 0x8000 },
+    { file = "orig/roms/10", addr = 0xd000 },
+    { file = "orig/roms/11", addr = 0xe000 },
+    { file = "orig/roms/12", addr = 0xf000 },
+]
+
+[checksums]
+rom_1 = { addr = 0x0000, size = 0x1000, sha1 = "f6d60e26c209c1df2cc01ac07ad5559daa1b7118" }
+rom_2 = { addr = 0x1000, size = 0x1000, sha1 = "4d6e82bc29f49100f7751ccfc6a9ff35695b84b3" }
+rom_3 = { addr = 0x2000, size = 0x1000, sha1 = "06a8c8dd0b4726eb7f0bb0e89c8533931d75fc1c" }
+rom_4 = { addr = 0x3000, size = 0x1000, sha1 = "aaf89c19fd8f4e8750717169eb1af476aef38a5e" }
+rom_5 = { addr = 0x4000, size = 0x1000, sha1 = "79b4680ce19bd28882ae823f0e7b293af17cbb91" }
+rom_6 = { addr = 0x5000, size = 0x1000, sha1 = "f76ec5432a7939b33a27be1c6855e2dbe6d9fdc8" }
+rom_7 = { addr = 0x6000, size = 0x1000, sha1 = "06eae5138254723819a5e93cfd9e9f3285fcddf5" }
+rom_8 = { addr = 0x7000, size = 0x1000, sha1 = "7ae38a609ed9a6f62ca003cab719740ed7651b7c" }
+rom_9 = { addr = 0x8000, size = 0x1000, sha1 = "fd9d75b866f0ebbb723f84889337e6814496a103" }
+rom_a = { addr = 0xd000, size = 0x1000, sha1 = "d426a50e75dabe936de643c83a548da5e399331c" }
+rom_b = { addr = 0xe000, size = 0x1000, sha1 = "f8c6cbe3688f256f41a121255fc08f575f6a4b4f" }
+rom_c = { addr = 0xf000, size = 0x1000, sha1 = "fad7cea868ebf17347c4bc5193d647bbd8f9517b" }
+
+[[targets]]
+name = "sound"
+cpu = "Cpu6800"
+verbose = "Silent"
+mem-size = 65536
+project-file = "snd_src/main.src"
+source-mapping = "$(OUT_DIR)/sound.map"
+syms-file = "$(OUT_DIR)/sound.sym"
+bin-references = [{ file = "orig/all_roms/robotron.snd", addr = 0xf000 }]
+
+[targets.checksums]
+rom = { addr = 0xf000, size = 0x1000, sha1 = "15afefef11bfc3ab78f61ab046701db78d160ec3" }
+
+[sections]
+lo_rom  = { start = 0x0000, size = 0x9000 }
+hi_rom  = { start = 0xd000, size = 0x3000 }
+palette = { start = 0xc000, size = 0x0010 }
+ram     = { start = 0x9000, size = 0x2000 }
+nv_ram  = { start = 0xcc00, size = 0x0100 }
+
+[lsp]
+log-file = "lsp.log"

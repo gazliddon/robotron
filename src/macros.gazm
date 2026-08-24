@@ -1,0 +1,101 @@
+;;; Robotron 6809 Macros
+
+;;; Create a process with a run address of addr
+macro MAKP(addr) {
+    jsr MAKEP
+    fdb addr
+}
+
+macro makp(addr) {
+    jsr MAKEP
+    fdb addr
+}
+
+;;; Sleep for time frames and then run from wakeup
+macro NAP(time, wakeup) {
+    lda #time
+    ldx #wakeup
+    jmp SLEEP
+}
+
+macro nap(time, wakeup) {
+    lda #time
+    ldx #wakeup
+    jmp SLEEP
+}
+
+;;; Sleep for time frames and continue after sleep
+macro SLEEP(time) {
+    lda #time
+    ldx #*+6
+    jmp SLEEP
+}
+
+macro sleep(time) {
+    lda #time
+    ldx #*+6
+    jmp SLEEP
+}
+
+;;; Clear / Set flags
+macro CLC() {
+    andcc #$fe
+}
+
+macro clc() {
+    andcc #$fe
+}
+
+macro SEC() {
+    orcc #$01
+}
+
+macro sec() {
+    orcc #$01
+}
+
+macro CLI() {
+    andcc #$ef
+}
+
+macro cli() {
+    andcc #$ef
+}
+
+macro SEI() {
+    orcc #$10
+}
+
+macro sei() {
+    orcc #$10
+}
+
+macro DIE() {
+    jmp SUCIDE
+}
+
+macro die() {
+    jmp SUCIDE
+}
+
+macro NEWP(addr, type) {
+    ldx #addr
+    lda #type
+    jsr MKPROC
+}
+
+macro newp(addr, type) {
+    ldx #addr
+    lda #type
+    jsr MKPROC
+}
+
+macro MKPROB(process, object_pic, collion_vec) {
+    jsr MPROB
+    fdb process, object_pic, collion_vec
+}
+
+macro mkprob(process, object_pic, collion_vec) {
+    jsr MPROB
+    fdb process, object_pic, collion_vec
+}

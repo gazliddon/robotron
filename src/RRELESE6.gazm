@@ -1,0 +1,65 @@
+;;; Release 6 Patches, ROM Padding ($FF), and Checksum Block for Robotron Solid Blue (Rev 6)
+
+;; ROM 02 Gaps
+                ORG      $110D
+                fill     51, $FF
+                ORG      $1AB4
+                fill     12, $FF
+
+;; ROM 03 Patches & Gaps
+                ORG      $26B1
+                FCB      $55,$55,$55,$55,$55,$55,$55,$55
+                fill     7, $FF
+
+;; ROM 04 Gaps
+                ORG      $385B
+                fill     37, $FF
+
+;; ROM 05 Gaps
+                ORG      $4136
+                fill     10, $FF
+                ORG      $4661
+                fill     31, $FF
+                ORG      $4A97
+                fill     105, $FF
+
+;; ROM 06 Gaps
+                ORG      $56DE
+                fill     34, $FF
+                ORG      $5AEB
+                fill     85, $FF
+                ORG      $5EBA
+                fill     214, $FF
+
+;; ROM 07 Gaps
+                ORG      $6EFE
+                fill     2, $FF
+
+;; ROM 08 Gaps
+                ORG      $7790
+                fill     16, $FF
+
+;; ROM 09 Gaps
+                ORG      $8E0F
+                fill     501, $FF
+
+;; ROM 10 Patches & Gaps
+                ORG      $DEDE
+                fill     86, $FF
+                ORG      $DF34
+                FCB      $A,$A,$A,$A,$A,$A,$A
+                fill     5, $FF
+
+;; ROM 11 Gaps
+                ORG      $E398
+                fill     56, $FF
+                ORG      $E976
+                fill     82, $FF
+                ORG      $EFED
+                fill     3, $FF
+
+;; ROM 12 Checksum Table & Fudger Byte ($FFB5..$FFD6)
+                ORG      $FFB5
+                FCB      $00,$73, $10,$EA, $20,$1A, $30,$6C, $40,$B3, $50,$23, $60,$A3, $70,$3B
+                FCB      $80,$63, $90,$00, $A0,$00, $B0,$00, $C0,$00, $D0,$5C, $E0,$82, $F0,$01
+                FCB      0, $3D

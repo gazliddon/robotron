@@ -1,0 +1,4 @@
+;;; Robotron Sound Board (6800/6802/6808) Main Assembly
+include "vsndrm3.src"
+
+writebin "$(OUT_DIR)/robotron.snd", $F000, $1000

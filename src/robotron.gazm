@@ -1,0 +1,80 @@
+;; Robotron 2084 Main Assembly
+include "macros.gazm"
+include "RRF.gazm"
+include "RRFRED.gazm"
+include "memory.gazm"
+
+scope rrh11
+include "RRH11.gazm"
+
+scope rrc11
+include "RRC11.gazm"
+
+scope rrb10
+include "RRB10.gazm"
+
+scope rrg23
+include "RRG23.gazm"
+
+scope japdata
+include "JAPDATA.gazm"
+
+scope rrp8
+include "RRP8.gazm"
+
+scope rrt2
+include "RRT2.gazm"
+
+scope rrdx2
+include "RRDX2.gazm"
+; include "RRCHRIS.gazm" (Christian Gingras enforcer patch not in Rev 6 release)
+
+scope rrtk4
+include "RRTK4.gazm"
+
+scope rrm1
+include "RRM1.gazm"
+
+scope rrx7
+include "RRX7.gazm"
+
+scope rrtext
+include "RRTEXT.gazm"
+
+scope rrlog
+include "RRLOG.gazm"
+
+scope rrtestb
+include "RRTESTB.gazm"
+
+scope rrs22
+include "RRS22.gazm"
+
+scope rrtable
+include "RRTABLE.gazm"
+
+scope rrtestc
+include "RRTESTC.gazm"
+
+scope rrset
+include "RRSET.gazm"
+
+scope rrtest1
+include "RRTEST1.gazm"
+
+scope rrelese6
+include "RRELESE6.gazm"
+
+;; Write ROMs
+writebin "$(OUT_DIR)/01", $0000, $1000
+writebin "$(OUT_DIR)/02", $1000, $1000
+writebin "$(OUT_DIR)/03", $2000, $1000
+writebin "$(OUT_DIR)/04", $3000, $1000
+writebin "$(OUT_DIR)/05", $4000, $1000
+writebin "$(OUT_DIR)/06", $5000, $1000
+writebin "$(OUT_DIR)/07", $6000, $1000
+writebin "$(OUT_DIR)/08", $7000, $1000
+writebin "$(OUT_DIR)/09", $8000, $1000
+writebin "$(OUT_DIR)/10", $d000, $1000
+writebin "$(OUT_DIR)/11", $e000, $1000
+writebin "$(OUT_DIR)/12", $f000, $1000

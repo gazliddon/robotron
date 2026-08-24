@@ -1,0 +1,63 @@
+robotron_rom_1: equ 0x0000
+robotron_rom_2: equ 0x1000
+robotron_rom_3: equ 0x2000
+robotron_rom_4: equ 0x3000
+robotron_rom_5: equ 0x4000
+robotron_rom_6: equ 0x5000
+robotron_rom_7: equ 0x6000
+robotron_rom_8: equ 0x7000
+robotron_rom_9: equ 0x8000
+robotron_rom_10: equ 0xd000
+robotron_rom_11: equ 0xe000
+robotron_rom_12: equ 0xf000
+
+org 0
+put robotron_rom_1
+incbinref "$(REF_ROMS_DIR)/01", robotron_rom_1
+
+org 0
+put robotron_rom_2
+incbinref "$(REF_ROMS_DIR)/02", robotron_rom_2
+
+org 0
+put robotron_rom_3
+incbinref "$(REF_ROMS_DIR)/03", robotron_rom_3
+
+org 0
+put robotron_rom_4
+incbinref "$(REF_ROMS_DIR)/04", robotron_rom_4
+
+org 0
+put robotron_rom_5
+incbinref "$(REF_ROMS_DIR)/05", robotron_rom_5
+
+org 0
+put robotron_rom_6
+incbinref "$(REF_ROMS_DIR)/06", robotron_rom_6
+
+org 0
+put robotron_rom_7
+incbinref "$(REF_ROMS_DIR)/07", robotron_rom_7
+
+org 0
+put robotron_rom_8
+incbinref "$(REF_ROMS_DIR)/08", robotron_rom_8
+
+org 0
+put robotron_rom_9
+incbinref "$(REF_ROMS_DIR)/09", robotron_rom_9
+
+org 0
+put robotron_rom_10
+incbinref "$(REF_ROMS_DIR)/10", robotron_rom_10
+
+org 0
+put robotron_rom_11
+incbinref "$(REF_ROMS_DIR)/11", robotron_rom_11
+
+org 0
+put robotron_rom_12
+incbinref "$(REF_ROMS_DIR)/12", robotron_rom_12
+
+org 0
+put 0

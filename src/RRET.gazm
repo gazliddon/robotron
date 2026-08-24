@@ -1,0 +1,984 @@
+PHRTAB:         FDB      BADDMP ; 0
+                FDB      OKMP ; PHRASE 16 INITIAL TESTS...                         1
+                FDB      RERRMP ; PHRASE 17 RAM ERROR                                2
+                FDB      ROMERP ; PHRASE 18 ROM ERROR                                3
+                FDB      ROMOKP ; PHRASE 25 ALL ROMS OK ETC                          4
+                FDB      RAMOKP ; PHRASE 26 NO RAM ERRORS DETECTED                   5
+                FDB      CMOKP ; PHRASE 27 BATTERY RAM OK                           6
+                FDB      CMERRP ; PHRASE 28 BATTERY RAM ERROR                        7
+                FDB      CMDORP ; PHRASE 29 BATTERY ROM, OR WRITE PROTECT CIRCUIT    8
+                FDB      SNDTEP ; PHRASE 30 SOUND LINE X                             9
+                FDB      FDROMP ; PHRASE 31 FRONT DOOR ROM ERROR                    10
+                FDB      FDRAMP ; PHRASE 32 FRONT DOOR RAM ERROR                    11
+                FDB      SWTSTP ; PHRASE 33 SWITCH TEST                             12
+                FDB      SZAUP ; AUTO UP               34                          13
+                FDB      SZADV ; ADV                  35                          14
+                FDB      SZRC ; RIGHT COIN           36                          15
+                FDB      SZHSR ; HIGH SCORE RESET     37                          16
+                FDB      SZLC ; LEFT COIN            38                          17
+                FDB      SZCC ; CENTER COIN          39                          18
+                FDB      SZSS ; SLAM SWITCH          40                          19
+                FDB      SZFIRE ; FIRE MESSAGE         41                          20
+                FDB      SZTHR ; THRUST               42                          21
+                FDB      SZSB ; SMART BOMB           43                          22
+                FDB      SZHYP ; HYPER SPACE          44                          23
+                FDB      SZS2 ; START 2              45                          24
+                FDB      SZS1 ; START 1              46                          25
+                FDB      SZREV ; REVERSE              47                          26
+                FDB      SZDOWN ; DOWN                 48                          27
+                FDB      SZUP ; UP                   49                          28
+                FDB      SZINV ; INVISO               50                          29
+                FDB      CRTSTP ; COLOR MATRIX TEST    51                          30
+                FDB      BOOKMP ; BOOKKEEPING          52                          31
+                FDB      AZS1 ; LEFT SLOT            53                          32
+                FDB      AZS2 ; CENTER SLOT          54                          33
+                FDB      AZS3 ; RIGHT SLOT           55                          34
+                FDB      AZPDC ; PAID CREDITS         56                          35
+                FDB      AZFS ; FREE SHIPS           57                          36
+                FDB      AZTIM ; TOTAL PLAY TIME      58                          37
+                FDB      AZSHIP ; TOTAL SHIP COUNT     59                          38
+                FDB      AZPLAY ; TOTAL PLAYS          60                          39
+                FDB      GOMP ; GAME OVER                                        40
+                FDB      AUD1P ; HIGH OF 6 DIG        62                          41
+                FDB      AUD2P ; LOW OF 6 DIG         63                          42
+                FDB      AUD3P ; 4 DIG                64                          43
+                FDB      FROBMP ; FROB                       65                    44
+                FDB      CONTMP ; CONTINUED ON NEXT PAGE     66                    45
+                FDB      JZREP ; REPLAY ADJUSTMENT          67                    46
+                FDB      JZSHP ; 1 CRED SHIPS               68                    47
+                FDB      JZCONS ; COIN SELECT                70                    48
+                FDB      JZSL1 ; SLOT 1                     71                    49
+                FDB      JZSL2 ; SLOT 2                     72                    50
+                FDB      JZSL3 ; SLOT 3                     73                    51
+                FDB      JZCUC ; CREDIT UNIT                74                    52
+                FDB      JZCUB ; BONUS UNIT                 75                    53
+                FDB      JZMUN ; MINIMUM UNITS NEEDED       76                    54
+                FDB      JZFREE ; FREE PLAY                  77                    55
+                FDB      JZMASA ; MASTER ADJUST              78                    56
+                FDB      JZGODL ; GOD LETTERS                87                    57
+                FDB      JZFACS ; FACTORY SETTINGS           88                    58
+                FDB      JZCAUD ; CLEAR AUDIT                89                    59
+                FDB      JZCLHS ; CLEAR HIGH SCORES          90                    60
+                FDB      JZAUTO ; AUTO CYCLE                 91                    61
+                FDB      JZOPM ; OPERATOR MESSAGE           92                    62
+                FDB      JZGOD ; LETTERS IN GOD             93                    63
+                FDB      REPMS1 ; REPLAY MESSAGE 1           94                    64
+                FDB      REPMS2 ; 95                    65
+                FDB      NOMESP ; JUST THE NUMBER            96                    66
+                FDB      HIVOLP ; HI VOLUME ARCADE           97                    67
+                FDB      RECOMP ; RECOMMENDED SETTING        98                    68
+                FDB      POORPP ; WEAK PLAYER SETTING        99                    69
+                FDB      CUSTMP ; CUSTOM SETTINGS           100                    70
+                FDB      YESMP ; YES ONLY                  101                    71
+                FDB      NOMP ; NO ONLY                   102                    72
+                FDB      EXLIBP ; EXTRA LIBERAL             103                    73
+                FDB      LIBP ; 104                    74
+                FDB      PGOMP ; PLAYER X GAME OVER         105                    75
+                FDB      CONSP ; 106                    76
+                FDB      EXCONP ; 107                    77
+                FDB      REPMS3 ; REPLAY MESSAGE 3          108                    78
+                FDB      CMIMEP ; 109                    79
+                FDB      RESMSP ; 110                    80
+                FDB      YES1MP ; 111                    81
+                FDB      COIN1P ; 112                    82
+                FDB      COIN2P ; 113                    83
+                FDB      COIN3P ; 114                    84
+                FDB      COIN4P ; 115                    85
+                FDB      COIN5P ; 116                    86
+                FDB      COIN6P ; 117                    87
+                FDB      COIN7P ; 118                    88
+                FDB      COIN8P ; 119                    89
+                FDB      NOREPP ; 120                    90
+                FDB      BOOKRP ; 121                    91
+                FDB      OPMESP ; 125                    92
+                FDB      HSRESP ; 126                    93
+                FDB      GODMSP ; 135                    94
+                FDB      CONGP ; 136                    95
+                FDB      NOWMSP ; 137                    96
+                FDB      HSINDP ; 139                    97
+                FDB      HIGH1P ; 140                    98
+                FDB      HIGH3P ; 141                    99
+                FDB      ONLY5P ; 148                   100
+                FDB      CENTRP ; 149                   101
+                FDB      REPMS4 ; 102
+                FDB      PLUPP ; PLAYER X UP                                     103
+                FDB      WAVEP ; WAVE NUMBER                                     104
+                FDB      INDMFP ; 105
+                FDB      AVM1 ; 106
+                FDB      AVM2 ; 107
+                FDB      AVM3 ; 108
+                FDB      AVM4 ; 109
+                FDB      SCRMEP ; 110
+                FDB      INDMEP ; 111
+                FDB      CPYM1 ; 112
+                FDB      CPYM2 ; 113
+                FDB      WAVEM2 ; 114
+                FDB      PMOM
+                FDB      PDAD
+                FDB      PKID
+                FDB      PGRUNT
+                FDB      PHULK
+                FDB      PSPCU
+                FDB      PENTK
+                FDB      PBRAIN
+                FDB      COINF ; 123
+                FDB      PPROG
+                FDB      EXMANN ; 125
+                FDB      NULM ; 126
+                FDB      CRDM22
+                FDB      TITLEP ; 128
+                FDB      FAMMP ; 129
+
+SCRMEP:         FCB      COLOR,$77,CURSAB,$35,$25,0,SUB
+                FDB      ROHSUB
+                fcc "ES"
+                FCB      CURSAB,$35,$6E,0
+                fcc "ALL "
+                FCB      CURSOR,0,0,1
+                fcc "TIME "
+                FCB      CURSOR,1,0,0
+                fcc "HEROES"
+NULM:           FCB      0
+
+ROHSUB:         fcc "ROBOTRON HERO"
+                FCB      0
+
+INDMEP:         FCB      SBLANK,NUMB,RPAREN,SPACE,0
+
+CENTRP:         FCB      COLOR,$99,CURSAB,$25,$70,1
+                fcc "CENTER THE LINE USING "
+                FCB      HYPHEN
+                fcc "FIRE"
+                FCB      HYPHEN,CURSAB,$24,$7E,1
+                FCB      SUB
+                FDB      PASUB ; 'PRESS ADVANCE '
+                fcc "WHEN CENTERED"
+                FCB      COLOR,$BB,SFONT,CURSAB,$49,$50,1,ARROW
+                FCB      0
+
+PASUB:          fcc "PRESS ADVANCE "
+                FCB      0
+
+PESUB:          FCB      SUB
+                FDB      PASUB
+                fcc "TO EXIT"
+                FCB      0
+
+OPMESP:         FCB      COLOR,$BB,CURSAB,$2E,$16,0,SUB
+                FDB      AMSUB
+                FCB      SUB
+                FDB      TELSUB
+                FCB      0
+
+ONLY5P:         FCB      COLOR,$BB,CURSAB,$20,$70,0
+                fcc "5 ENTRIES MAXIMUM"
+                FCB      SUB
+                FDB      PPSUB
+                FCB      CURSAB,$28,$90,1
+                fcc "LOWEST ENTRY REPLACED"
+                FCB      0
+
+TELSUB:         FCB      SFONT,COLOR,$99,CURSAB,$2F,$C0,1
+                FCB      SUB
+                FDB      UPDNSB
+                fcc "LETTER"
+                FCB      CURSAB,$32,$CC,0
+                FCB      HYPHEN
+                fcc "FIRE UP"
+                FCB      HYPHEN
+                fcc " TO ENTER LETTER"
+                FCB      COLOR,$44
+                FDB      0
+
+PRPLYR:         FCB      CURSAB,$40,$10,$0
+PLRSUB:         fcc "PLAYER "
+                FCB      0
+
+GODMSP:         FCB      COLOR,$BB,SUB
+                FDB      PRPLYR
+                FCB      ZBLANK,NUMY,CURSAB,$2C,$28,0
+                fcc "YOU ARE THE GREATEST"
+                FCB      CURSAB,$36,$38,0,SUB
+                FDB      ROHSUB
+                FCB      CURSAB,$34,$58,0,SUB
+                FDB      ENTSSB
+                fcc "NAME"
+                FCB      CURSAB,$31,$68,0,LPAREN
+                fcc "UP TO "
+                FCB      ZBLANK,NUMB
+                fcc " LETTERS"
+                FCB      RPAREN,SUB
+                FDB      TELSUB
+                FCB      0
+
+ENTSSB:         fcc "ENTER YOUR "
+                FCB      0
+
+CONGP:          FCB      COLOR,$44,SUB
+                FDB      PRPLYR
+                FCB      ZBLANK,NUMB
+                FCB      CURSAB,$29,$30,0
+                fcc "YOU ARE A "
+                FCB      SUB
+                FDB      ROHSUB
+NOWSUB:         FCB      CURSAB,$2D,$58,1,SUB
+                FDB      ENTSSB
+                fcc "INITIALS"
+                FCB      COLON,SUB
+                FDB      TELSUB
+                FCB      0
+
+NOWMSP:         FCB      COLOR,$99,SUB
+                FDB      PRPLYR
+                FCB      ZBLANK,NUMB
+                FCB      CURSAB,$43,$67,0
+                fcc "ALSO"
+                FCB      SUB
+                FDB      NOWSUB
+                FCB      0
+
+HSINDP:         FCB      SBLANK,NUMB,RPAREN,SPACE,SPACE,0
+
+HIGH1P:         FCB      SBLANK,NUMY,0
+
+HIGH3P:         FCB      CURSOR,$8,0,0,SBLANK,NUMY,0
+
+REPMS1:         FCB      SBLANK,NUMB
+                fcc "000  "
+LIBS:           fcc "LIBERAL"
+                FCB      0
+
+REPMS2:         FCB      SBLANK,NUMB
+                fcc "000  "
+RECS1:          fcc "RECOMMENDED"
+                FCB      0
+
+REPMS3:         FCB      SBLANK,NUMB
+                fcc "000  "
+CONSUB:         fcc "CONSERVATIVE"
+                FCB      0
+
+REPMS4:         FCB      SBLANK,NUMB
+                fcc "000  EXTRA "
+                FCB      SUB
+                FDB      CONSUB
+                FCB      0
+
+SPSUB:          FCB      CURSOR,8,0,0 ; MOVE 8 FULL BYTES TO THE RIGHT
+                FCB      0
+
+RECS2:          FCB      SUB
+                FDB      SPSUB
+                FCB      SUB
+                FDB      RECS1
+                FCB      0
+
+NOMESP:         FCB      SBLANK,NUMB,0
+
+HIVOLP:         FCB      SUB
+                FDB      SVSUB
+                fcc "HIGH VOLUME ARCADES"
+                FCB      0
+
+RECOMP:         FCB      SBLANK,NUMB,SUB
+                FDB      RECS2
+                FCB      0
+
+POORPP:         FCB      SUB
+                FDB      SVSUB
+                fcc "FOR WEAKER PLAYERS"
+                FCB      0
+
+CUSTMP:         FCB      SUB
+                FDB      SVSUB
+                fcc "CUSTOM "
+                FCB      HYPHEN,SPACE,LPAREN
+                fcc "ADJUST BELOW"
+                FCB      RPAREN,0
+YES1MP:         fcc "YES"
+                FCB      SUB
+                FDB      SPSUB
+                FCB      CURSOR,-2,0,0 ; ALLOW FOR EXTRA LETTER 'S'
+                fcc "ADVANCE TO ACTIVATE"
+                FCB      0
+
+SVSUB:          FCB      SBLANK,NUMB,SUB
+                FDB      SPSUB
+                FCB      0
+
+YESMP:          fcc "YES"
+                FCB      0
+
+NOMP:           fcc "NO"
+                FCB      0
+
+
+EXLIBP:         FCB      SUB
+                FDB      EXSBB
+                FCB      SUB
+                FDB      LIBS
+                FCB      0
+
+EXSBB:          FCB      SUB
+                FDB      SVSUB
+                fcc "EXTRA "
+                FCB      0
+
+LIBP:           FCB      SUB
+                FDB      SVSUB
+                FCB      SUB
+                FDB      LIBS
+                FCB      0
+
+CONSP:          FCB      SUB
+                FDB      SVSUB
+                FCB      SUB
+                FDB      CONSUB
+                FCB      0
+
+EXCONP:         FCB      SUB
+                FDB      EXSBB
+                FCB      SUB
+                FDB      CONSUB
+                FCB      0
+
+NOREPP:         FCB      SUB
+                FDB      SVSUB
+                fcc "NO EXTRA MEN"
+                FCB      0
+
+COIN1P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "FIFTY  3"
+                FCB      SLASH
+                fcc "DOLLAR"
+                FCB      0
+
+COINF:          FCB      SUB
+                FDB      SVSUB
+                fcc "FREE PLAY"
+                FCB      0
+
+COIN2P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "1 DM  6"
+                FCB      SLASH
+                fcc "5 DM"
+                FCB      0
+
+COIN3P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "QUARTER  4"
+                FCB      SLASH
+                fcc "DOLLAR"
+                FCB      0
+
+COIN4P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "2 F  3"
+                FCB      SLASH
+                fcc "5 F"
+                FCB      0
+
+COIN5P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "FIFTY  2"
+                FCB      SLASH
+                fcc "DOLLAR"
+                FCB      0
+
+COIN6P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "25  4"
+                FCB      SLASH
+                fcc "1 G"
+                FCB      0
+
+COIN7P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "5 F  2"
+                FCB      SLASH
+                fcc "10 F"
+                FCB      0
+
+COIN8P:         FCB      SUB
+                FDB      SVSUB
+                fcc "1"
+                FCB      SLASH
+                fcc "10 F"
+                FCB      0
+
+CMIMEP:         FCB      COLOR,$11,CURSAB,$30,$80,0,SUB
+                FDB      ADJS
+                fcc " FAILURE"
+                FCB      CURSAB,$20,$A0,0
+                fcc "RESTORE"
+                FCB      SUB
+                FDB      FACSUB
+                fcc "BY"
+                FCB      CURSAB,$20,$B0,0,SUB
+                FDB      CMISUB
+                FCB      COKSUB
+                FDB      CMICOK
+                FCB      CURSAB,$20,$C0,0
+                fcc "AND TURNING GAME OFF AND ON"
+                FCB      0
+
+FACSUB:         fcc " FACTORY SETTINGS "
+                FCB      0
+
+RESMSP:         FCB      COLOR,$99,CURSAB,$21,$80,0,SUB
+                FDB      FACSUB
+                fcc " RESTORED"
+                FCB      0
+
+CMISUB:         fcc "OPENING "
+FDORSB:         fcc "FRONT DOOR"
+                FCB      0
+
+CMICOK:         FCB      CURSAB,$20,$B0,0,COLOR,$00,SUB
+                FDB      CMISUB
+                FCB      CURSAB,$20,$B0,0,COLOR,$11
+                fcc "RAISING "
+TABLSB:         fcc "TABLE TOP"
+                FCB      0
+
+FROBMP:         FCB      COLOR,$99,FROB,COLOR,$66,0 ; DISPLAY FROB
+
+CONTMP:         FCB      LFONT,COLOR,$99,CURSAB,$37,$0F,0
+                fcc "GAME "
+                FCB      SUB
+                FDB      ADJS
+                FCB      SFONT,CURSAB,$2E,$CD,0,COLOR,$99,SUB
+                FDB      UPDNSB
+                FCB      SUB
+                FDB      ADJS
+                FCB      CURSAB,$2B,$D5,0
+                fcc "USE "
+                FCB      HYPHEN
+                fcc "FIRE"
+                FCB      HYPHEN
+                fcc " LEVER TO CHANGE THE VALUE"
+                FCB      CURSAB,$39,$E2,0,COLOR,$55,SUB
+                FDB      PESUB
+                FCB      0
+
+ADJS:           fcc "ADJUSTMENT"
+                FCB      0
+
+UPDNSB:         fcc "USE "
+                FCB      HYPHEN
+                fcc "MOVE"
+                FCB      HYPHEN
+                fcc " TO SELECT "
+                FCB      0
+
+EXMANN:         FCB      COLOR,$66,CURSAB,$36,$EE,0,SUB
+                FDB      JZREP
+                FCB      SPACE,NUMB
+                fcc "000"
+                FCB      0
+
+JZREP:          fcc "EXTRA MAN EVERY"
+                FCB      0
+
+JZSHP:          fcc "TURNS"
+PPSUB:          fcc " PER "
+                FCB      SUB
+                FDB      PLRSUB
+                FCB      0
+
+JZCONS:         fcc "PRICING SELECTION"
+                FCB      0
+
+JZSL1:          fcc "LEFT"
+                FCB      SUB
+                FDB      SLSUB
+                FCB      0
+
+JZSL2:          fcc "CENTER"
+                FCB      SUB
+                FDB      SLSUB
+                FCB      0
+
+JZSL3:          fcc "RIGHT"
+                FCB      SUB
+                FDB      SLSUB
+                FCB      0
+
+SLSUB:          fcc " SLOT UNITS"
+                FCB      0
+
+JZCUC:          FCB      SUB
+                FDB      UNFOR
+                fcc "CREDIT"
+                FCB      0
+
+JZCUB:          FCB      SUB
+                FDB      UNFOR
+                fcc "BONUS CREDIT"
+                FCB      0
+
+JZMUN:          fcc "MINIMUM UNITS FOR ANY CREDIT"
+                FCB      0
+
+UNFOR:          fcc "UNITS REQUIRED FOR "
+                FCB      0
+
+JZFREE:         fcc "FANCY ATTRACT MODE"
+                FCB      0
+
+JZMASA:         fcc "DIFFICULTY OF PLAY"
+                FCB      0
+
+JZGODL:         fcc "LETTERS FOR"
+                FCB      SUB
+                FDB      HISCR
+                FCB      0
+
+HISCR:          fcc " HIGHEST SCORE NAME"
+                FCB      0
+
+JZFACS:         fcc "RESTORE"
+                FCB      SUB
+                FDB      FACSUB
+                FCB      0
+
+JZCAUD:         fcc "CLEAR"
+                FCB      SUB
+                FDB      BKTSUB
+                FCB      0
+
+JZCLHS:         fcc "HIGH SCORE TABLE RESET"
+                FCB      0
+
+JZAUTO:         fcc "AUTO CYCLE"
+                FCB      0
+
+JZOPM:          fcc "SET "
+AMSUB:          fcc "ATTRACT MODE MESSAGE"
+                FCB      0
+
+JZGOD:          fcc "SET"
+                FCB      SUB
+                FDB      HISCR
+                FCB      0
+
+AUD1P:          FCB      SBLANK,NUMB,0 ; SETUP SKIP-BLANKING
+
+AUD2P:          FCB      NBLANK,NUMY,0 ; NO BLANKING ON THIS PART
+
+AUD3P:          FCB      CURSOR,6,0,0 ; MOVE 2 CHARACTERS RIGHT
+                FCB      SBLANK,NUMY,0 ; THEN PRINT NUMBER WITH SPACING
+
+BOOKMP:         FCB      CURSAB,$2F,$10,0
+                FCB      COLOR,$99,SUB
+                FDB      BKTSUB
+                FCB      COLOR,$11,0
+
+BOOKRP:         FCB      CURSAB,$20,$60,0
+                FCB      COLOR,$33,SUB
+                FDB      BKTSUB
+                fcc "CLEARED"
+                FCB      0
+
+HSRESP:         FCB      CURSAB,$2A,$40,0
+                FCB      COLOR,$88,SUB
+                FDB      JZCLHS
+                FCB      0
+
+BKTSUB:         fcc " BOOKKEEPING TOTALS "
+                FCB      0
+
+AUDX1:          EQU      $1C
+AUDX2:          EQU      $6C
+
+AZPDC:          FCB      CURSAB,AUDX1,$60,0
+                fcc "PAID CREDITS"
+                FCB      CURSAB,AUDX2,$60,0,0
+
+AZFS:           FCB      CURSAB,AUDX1,$70,0
+                fcc "EXTRA MEN EARNED"
+                FCB      CURSAB,AUDX2,$70,0,0
+
+AZTIM:          FCB      CURSAB,AUDX1,$80,0
+                fcc "PLAY TIME IN MINUTES"
+                FCB      CURSAB,AUDX2,$80,0,0
+
+AZSHIP:         FCB      CURSAB,AUDX1,$90,0
+                fcc "MEN PLAYED"
+                FCB      CURSAB,AUDX2,$90,0,0
+
+AZPLAY:         FCB      CURSAB,AUDX1,$A0,0
+                fcc "CREDITS PLAYED"
+                FCB      CURSAB,AUDX2,$A0,0,0
+
+AVM1:           FCB      CURSAB,AUDX1,$C0,0
+                fcc "AVERAGE TIME PER CREDIT"
+                FCB      CURSAB,AUDX2-8,$C0,0,0
+
+AVM2:           FCB      COLON,NBLANK,NUMB,0
+
+AVM3:           FCB      CURSAB,AUDX1,$D0,0
+                fcc "AVERAGE TURNS PER CREDIT"
+                FCB      CURSAB,AUDX2-8,$D0,0,0
+
+AVM4:           FCB      PERIOD,NBLANK,NUMB,0
+
+AZS1:           FCB      CURSAB,AUDX1,$30,0
+                fcc "LEFT"
+                FCB      SUB
+                FDB      COINSB
+                FCB      CURSAB,AUDX2,$30,0,0
+
+AZS2:           FCB      CURSAB,AUDX1,$40,0
+                fcc "CENTER"
+                FCB      SUB
+                FDB      COINSB
+                FCB      CURSAB,AUDX2,$40,0,0
+
+AZS3:           FCB      CURSAB,AUDX1,$50,0
+                fcc "RIGHT"
+                FCB      SUB
+                FDB      COINSB
+                FCB      CURSAB,AUDX2,$50,0,0
+
+COINSB:         fcc " SLOT COINS"
+                FCB      0
+
+CRTSTP:         FCB      COLOR,$33,CURSAB,$3A,$80,0
+                fcc "COLOR RAM TEST"
+                FCB      CURSAB,$27,$B0,0
+                fcc "VERTICAL BARS INDICATE ERROR"
+                FCB      0
+
+SZAUP:          fcc "AUTO UP"
+                FCB      0
+
+SZADV:          fcc "ADVANCE"
+                FCB      0
+
+SZRC:           fcc "RIGHT COIN"
+                FCB      0
+
+SZHSR:          fcc "HIGH SCORE RESET"
+                FCB      0
+
+SZLC:           fcc "LEFT COIN"
+                FCB      0
+
+SZCC:           fcc "CENTER COIN"
+                FCB      0
+
+SZSS:           fcc "SLAM SWITCH"
+                FCB      0
+
+SZFIRE:         fcc "MOVE UP"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZTHR:          fcc "MOVE DOWN"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZSB:           fcc "MOVE LEFT"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZHYP:          fcc "MOVE RIGHT"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZS2:           fcc "1"
+                FCB      SUB
+                FDB      PSTSUB
+                FCB      0
+
+SZS1:           fcc "2"
+                FCB      SUB
+                FDB      PSTSUB
+                FCB      0
+
+PSTSUB:         FCB      SPACE,SUB
+                FDB      PLRSUB
+                fcc "START"
+                FCB      0
+
+SZREV:          fcc "FIRE UP"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZDOWN:         fcc "FIRE DOWN"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZUP:           fcc "FIRE LEFT"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+SZINV:          fcc "FIRE RIGHT"
+                FCB      COKSUB
+                FDB      PLYSUB
+                FCB      0
+
+PLYSUB:         fcc "  "
+                FCB      LPAREN,SUB
+                FDB      PLRSUB
+                FCB      ZBLANK,NUMB,RPAREN,0
+
+SWTSTP:         FCB      COLOR,$88,CURSAB,$3A,26,0
+                fcc "SWITCH TEST"
+                FCB      0
+
+ROMOKP:         FCB      COLOR,$99,CURSAB,$3E,$50,$0
+                fcc "ALL ROMS OK"
+                FCB      CURSAB,$36,$90,0,COLOR,$33
+                fcc "RAM TEST FOLLOWS"
+                FCB      SUB
+                FDB      ROKSB
+                FCB      0
+
+ROKSB:          FCB      CURSAB,$2F,$A0,0,SUB
+                FDB      PESUB
+                FCB      0
+
+RAMSUB:         fcc " RAM ERRORS DETECTED"
+                FCB      0
+
+RAMOKP:         FCB      COLOR,$99,CURSAB,$2A,$80,0
+                fcc "NO"
+                FCB      SUB
+                FDB      RAMSUB
+                FCB      0
+
+CMOKP:          FCB      COLOR,$99,CURSAB,$23,$80,0
+                fcc "NO CMOS"
+                FCB      SUB
+                FDB      RAMSUB
+                FCB      0
+
+CMSUB:          fcc "CMOS RAM"
+                FCB      SUB
+                FDB      ERRSUB
+                FCB      0
+
+CMERRP:         FCB      COLOR,$11,CURSAB,$36,$80,0
+                FCB      SUB
+                FDB      CMSUB
+                FCB      0
+
+CMDORP:         FCB      SUB
+                FDB      CMERRP
+                FCB      CURSAB,$28,$90,0
+                fcc "OR WRITE PROTECT FAILURE"
+                FCB      COLOR,$99,SUB
+                FDB      FDSUBB
+                FCB      COKSUB
+                FDB      FDCOCK
+                FCB      0
+
+FDCOCK:         FCB      COLOR,$00,SUB
+                FDB      FDSUBB
+                FCB      COLOR,$99,CURSAB,$17,$B0,0,HYPHEN,SUB
+                FDB      TABLSB
+MBOSUB:         fcc " MUST BE OPEN FOR TEST"
+                FCB      HYPHEN,0
+
+FDSUBB:         FCB      CURSAB,$1B,$B0,0,HYPHEN,SUB
+                FDB      FDORSB
+                FCB      SUB
+                FDB      MBOSUB
+                FCB      0
+
+SNDTEP:         FCB      COLOR,$00,CURSAB,$57,$80,0
+                FCB      BLANKR ; BLANK OUT THE LAST ONE
+                FCB      COLOR,$99,CURSAB,$3A,$80,0
+                fcc "SOUND LINE "
+                FCB      ZBLANK,NUMB,0
+                FCB      PERIOD,SPACE,SPACE
+
+INSUB:          FCB      CURSAB,$30,$70,0
+                fcc "INITIAL TESTS INDICATE"
+                FCB      COLON,0
+
+INDMFP:         FCB      COLOR,$11,SUB
+                FDB      INSUB
+                FCB      CURSAB,$3C,$90,0
+                FCB      SUB
+                FDB      BADDMP
+                FCB      0
+
+OKMP:           FCB      COLOR,$99,SUB
+                FDB      INSUB
+                FCB      CURSAB,$3F,$90,1
+                fcc "OPERATIONAL"
+                FCB      0
+
+INERSB:         FCB      COLOR,$11,SUB ; IN RED,
+                FDB      INSUB ; INITIAL TESTS INDICATE,
+                FCB      CURSAB,$40,$90,0,0 ; AND SET CURSOR FOR ERROR
+
+                fcc " (C) 1982 WILLIAMS ELECTRONICS INC. "
+
+FDSUB:          FCB      CURSAB,$40,$80,0
+                FCB      COLOR,$11
+                FCB      0
+
+BADDMP:         FCB      SUB
+                FDB      FDSUB
+                FCB      CURSOR,-30,0,0 ; RELATIVE CURSOR MOVE
+                fcc "SPECIAL CHIP FAILURE"
+                FCB      0 ; PRINT IT
+
+FDROMP:         FCB      SUB
+                FDB      FDSUB
+                fcc "ROM"
+                FCB      SUB
+                FDB      ERRSUB
+                FCB      NUMB,0
+
+FDRAMP:         FCB      SUB
+                FDB      FDSUB
+                fcc "RAM"
+                FCB      SUB
+                FDB      ERRSUB
+                FCB      NUMB,0
+
+ROMERP:         FCB      SUB
+                FDB      INERSB
+                fcc "ROM"
+                FCB      SUB
+                FDB      ERRSUB
+                FCB      NUMB,0
+
+RERRMP:         FCB      SUB
+                FDB      INERSB
+                fcc "RAM"
+                FCB      SUB
+                FDB      ERRSUB
+                FCB      NUMB,0
+
+ERRSUB:         fcc " ERROR "
+                FCB      ZBLANK,0
+
+CPYM1:          FCB      COLOR,$AA,CURSAB,$24,$C8,0,SUB
+                FDB      CPYSUB
+                FCB      COLOR,$66,CURSAB,$38,$B5,0
+                fcc "DESIGNED BY VID KIDZ"
+                FCB      CURSAB,$2E,$BC,0
+                fcc "FOR "
+                FCB      SUB
+                FDB      WNAMES
+                FCB      COLOR,$22,CURSAB,$3D,$A8,0,LFONT
+CDDSUB:         fcc "CREDITS"
+                FCB      COLON,SPACE,ZBLANK,NUMB
+                FCB      0
+
+CRDM22:         FCB      COLOR,$AA,CURSAB,$41,$EE,0
+                FCB      SUB
+                FDB      CDDSUB
+                FCB      0
+
+CPYM2:          FCB      CURSAB,$24,$EE,0
+CPYSUB:         fcc "COPYRIGHT 1982 "
+WNAMES:         fcc "WILLIAMS ELECTRONICS INC"
+                FCB      PERIOD
+                FCB      0
+
+GOMP:           FCB      CURSAB,$3E,$80,0
+GOSUBB:         fcc "GAME OVER"
+                FCB      0
+
+PGOMP:          FCB      CURSAB,$3F,$79,1,SUB
+                FDB      PLSUB
+                FCB      CURSAB,$3E,$86,0,SUB
+                FDB      GOSUBB
+                FCB      0
+
+PLUPP:          FCB      CURSAB,$3F,$7A,1
+PLSUB:          FCB      SUB
+                FDB      PLRSUB
+                FCB      ZBLANK,NUMB,0
+
+WAVEP:          FCB      CURSAB,$3E,$EE,0,SBLANK,COLOR,$AA
+                FCB      NUMB,CURSOR,3,0,0,COLOR,$BB
+                fcc " WAVE"
+                FCB      0
+
+WAVEM2:         FCB      CURSOR,$04,$00,0,ZBLANK,COLOR,$AA
+                FCB      NUMB,0
+
+PMOM:           fcc "MOMMY"
+                FCB      0
+
+PGRUNT:         fcc "GRUNT "
+                FCB      HYPHEN
+                fcc " 100"
+                FDB      0
+
+PDAD:           fcc "DADDY"
+                FCB      0
+
+PKID:           fcc "MIKEY"
+                FCB      0
+
+PHULK:          fcc "INDESTRUCTABLE HULK"
+                FCB      0
+
+PSPCU:          fcc "SPHEREOID "
+                FCB      HYPHEN
+                fcc " 1000     QUARK "
+                FCB      HYPHEN
+                fcc " 1000"
+                FCB      0
+
+PENTK:          fcc "ENFORCER "
+                FCB      HYPHEN
+                fcc " 150   TANK "
+                FCB      HYPHEN
+                fcc " 200"
+                FCB      0
+
+PBRAIN:         fcc "BRAIN "
+                FCB      HYPHEN
+                fcc " 500     CRUISE MISSILE "
+                FCB      HYPHEN
+                fcc " 25"
+                FCB      0
+
+PPROG:          fcc "PROG "
+                FCB      HYPHEN
+                fcc " 100"
+                FCB      0
+
+TITLEP:         FCB      COLOR,$AA,CURSAB,$36,$24,0
+                fcc "ROBOTRON"
+                FCB      COLON,SPACE
+                fcc "2084"
+                FCB      0
+
+FAMMP:          FCB      COLOR,$AA,CURSAB,$25,$84,0
+                fcc "SAVE THE LAST HUMAN FAMILY"
+                FCB      0
+

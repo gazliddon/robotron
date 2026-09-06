@@ -8,8 +8,7 @@ name = "robotron"
 verbose = "Silent"
 mem-size = 94208
 project-file = "src/robotron.gazm"
-source-mapping = "$(OUT_DIR)/robotron.map"
-syms-file = "$(OUT_DIR)/robotron.sym"
+metadata = true
 cpu = "Cpu6809"
 
 bin-references = [
@@ -47,8 +46,7 @@ cpu = "Cpu6800"
 verbose = "Silent"
 mem-size = 65536
 project-file = "snd_src/main.src"
-source-mapping = "$(OUT_DIR)/sound.map"
-syms-file = "$(OUT_DIR)/sound.sym"
+metadata = true
 bin-references = [{ file = "orig/all_roms/robotron.snd", addr = 0xf000 }]
 
 [targets.checksums]

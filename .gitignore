@@ -4,3 +4,4 @@ deps/
 lsp.log
 *.sym
 *.map
+*.meta
